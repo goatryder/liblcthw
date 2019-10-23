@@ -37,6 +37,7 @@ tests: $(TESTS)
 
 # The Cleaner
 clean:
+		rm -rf bin $(OBJECTS) $(TESTS)
 		rm -rf build $(OBJECTS) $(TESTS)
 		rm -f tests/tests.log
 		find . -name "*.gc*" -exec rm {} \;
