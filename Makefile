@@ -35,9 +35,6 @@ tests: CFLAGS += $(TARGET)
 tests: $(TESTS)
 		sh ./tests/runtests.sh
 
-valgrind:
-		VALGRIND="valgrind --log-file=/tmp/valgrind-%p.log" $(MAKE)
-
 # The Cleaner
 clean:
 		rm -rf build $(OBJECTS) $(TESTS)
@@ -46,7 +43,7 @@ clean:
 		rm -rf `find . -name "*.dSYM" -print`
 
 # The Install
-install :all
+install: all
 		install -d $(DESTDIR)/$(PREFIX)/lib/
 		install $(TARGET) $(DESTDIR)/$(PREFIX)/lib/
 
