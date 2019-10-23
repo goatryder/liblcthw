@@ -14,19 +14,19 @@ typedef struct DArray {
 
 DArray *DArray_create(size_t element_size, size_t initial_max);
 
-void DArray_destroy(DArray * array);
+void DArray_destroy(DArray *array);
 
-void DArray_clear(DArray * array);
+void DArray_clear(DArray *array);
 
-int DArray_expand(DArray * array);
+int DArray_expand(DArray *array);
 
-int DArray_contract(DArray * array);
+int DArray_contract(DArray *array);
 
-int DArray_push(DArray * array, void *el);
+int DArray_push(DArray *array, void *el);
 
-void *DArray_pop(DArray * array);
+void *DArray_pop(DArray *array);
 
-void DArray_clear_destroy(DArray * array);
+void DArray_clear_destroy(DArray *array);
 
 #define DArray_last(A) ((A)->contents[(A)->end - 1])
 #define DArray_first(A) ((A)->contents[0])
@@ -36,7 +36,8 @@ void DArray_clear_destroy(DArray * array);
 
 #define DEFAULT_EXPAND_RATE 300
 
-static inline void DArray_set(DArray * array, int i, void *el)
+// assign value to Darray contents with memory shift value i
+static inline void DArray_set(DArray *array, int i, void *el)
 {
     check(i < array->max, "darray attempt to set past max");
     if (i > array->end)
@@ -46,7 +47,8 @@ error:
     return;
 }
 
-static inline void *DArray_get(DArray * array, int i)
+// get contents value by index i from Darray
+static inline void *DArray_get(DArray *array, int i)
 {
     check(i < array->max, "darray attempt to get past max");
     return array->contents[i];
@@ -54,7 +56,8 @@ error:
     return NULL;
 }
 
-static inline void *DArray_remove(DArray * array, int i)
+// set NULL value to content with index i and return pointer to it
+static inline void *DArray_remove(DArray *array, int i)
 {
     void *el = array->contents[i];
 
@@ -63,7 +66,10 @@ static inline void *DArray_remove(DArray * array, int i)
     return el;
 }
 
-static inline void *DArray_new(DArray * array)
+
+// create memory chunk size of darray's element_size
+// and return pointer to it
+static inline void *DArray_new(DArray *array)
 {
     check(array->element_size > 0,
             "Can't use DArray_new on 0 size darrays.");
@@ -74,6 +80,7 @@ error:
     return NULL;
 }
 
+// use for erase element from memory
 #define DArray_free(E) free((E))
 
 #endif

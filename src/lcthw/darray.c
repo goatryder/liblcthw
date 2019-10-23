@@ -23,7 +23,7 @@ error:
     return NULL;
 }
 
-void DArray_clear(DArray * array)
+void DArray_clear(DArray *array)
 {
     int i = 0;
     if (array->element_size > 0) {
@@ -35,7 +35,7 @@ void DArray_clear(DArray * array)
     }
 }
 
-static inline int DArray_resize(DArray * array, size_t newsize)
+static inline int DArray_resize(DArray *array, size_t newsize)
 {
     array->max = newsize;
     check(array->max > 0, "The newsize must be > 0.");
@@ -53,7 +53,7 @@ error:
     return -1;
 }
 
-int DArray_expand(DArray * array)
+int DArray_expand(DArray *array)
 {
     size_t old_max = array->max;
     check(DArray_resize(array, array->max + array->expand_rate) == 0,
@@ -67,7 +67,7 @@ error:
     return -1;
 }
 
-int DArray_contract(DArray * array)
+int DArray_contract(DArray *array)
 {
     int new_size = array->end < (int)array->expand_rate ? 
             (int)array->expand_rate : array->end;
@@ -75,7 +75,7 @@ int DArray_contract(DArray * array)
     return DArray_resize(array, new_size + 1);
 }
 
-void DArray_destroy(DArray * array)
+void DArray_destroy(DArray *array)
 {
     if (array) {
         if (array->contents)
@@ -84,13 +84,13 @@ void DArray_destroy(DArray * array)
     }
 }
 
-void DArray_clear_destroy(DArray * array)
+void DArray_clear_destroy(DArray *array)
 {
     DArray_clear(array);
     DArray_destroy(array);
 }
 
-int DArray_push(DArray * array, void *el)
+int DArray_push(DArray *array, void *el)
 {
     array->contents[array->end] = el;
     array->end++;
@@ -102,7 +102,7 @@ int DArray_push(DArray * array, void *el)
     }
 }
 
-void *DArray_pop(DArray * array)
+void *DArray_pop(DArray *array)
 {
     check(array->end - 1 >= 0, "Attempt to pop from empty array.");
 
