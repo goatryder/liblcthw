@@ -59,7 +59,7 @@ int DArray_expand(DArray *array)
 			"Failed to expand array to new size: %d",
 			array->max + (int)array->expand_rate);
 			
-	memset(array->contents + old_max, array->expand_rate + 1);
+	memset(array->contents + old_max, 0, array->expand_rate + 1);
 	return 0;
 	
 error:
@@ -68,7 +68,7 @@ error:
 
 int DArray_contract(DArray *array)
 {
-	int new_size = array->end < (int)array->expand_rate ? (int)array->expand_rate : array-> end;
+	int new_size = array->end < (int)array->expand_rate ? (int)array->expand_rate : array-> end; // here size_t converted to int
 	
 	return DArray_resize(array, new_size + 1);
 }
@@ -76,7 +76,7 @@ int DArray_contract(DArray *array)
 void DArray_destroy(DArray *array)
 {
 	if(array) {
-		if(array->contents) fee(array->contents);
+		if(array->contents) free(array->contents);
 		free(array);
 	}
 }
@@ -84,7 +84,7 @@ void DArray_destroy(DArray *array)
 void DArray_clear_destroy(DArray *array)
 {
 	DArray_clear(array);
-	DArray_Destroy(array);
+	DArray_destroy(array);
 }
 
 int DArray_push(DArray *array, vold *el)
@@ -93,7 +93,7 @@ int DArray_push(DArray *array, vold *el)
 	array->end++;
 	
 	if(DArray_end(array) >= DArray_max(array)) {
-		return DArray_exand(array);		
+		return DArray_expand(array);		
 	} else {
 		return 0;
 	}
