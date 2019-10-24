@@ -10,10 +10,10 @@ TESTS=$(patsubst %.c,%,$(TEST_SRC))
 
 TARGET=build/liblcthw.a
 
-OS=$(shell lsb_release -si)
-ifeq ($(OS),Ubuntu)
-	LDLIBS=-llcthw -lbsd -L./build -lm
-endif
+# OS=$(shell lsb_release -si)
+# ifeq ($(OS),Ubuntu)
+# 	LDLIBS=-llcthw -lbsd -L./build -lm
+# endif
 
 # The Target Build
 all: $(TARGET) tests
@@ -39,6 +39,7 @@ tests: $(TESTS)
 # The Cleaner
 clean:
 	rm -rf build $(OBJECTS) $(TESTS)
+	rm -rf bin $(OBJECTS) $(TESTS)
 	rm -f tests/tests.log 
 	find . -name "*.gc*" -exec rm {} \;
 	rm -rf `find . -name "*.dSYM" -print`
