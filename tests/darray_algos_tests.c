@@ -40,7 +40,7 @@ char *run_sort_test(int (*func) (DArray *, DArray_compare),
     mu_assert(!is_sorted(words), "Words should start not sorted.");
 
     debug("--- Testing %s sorting algorithm", name);
-    int rc = func(words, (DArray_compare) testcmp); // will it work without scopes of DArray_compare
+    int rc = func(words, (DArray_compare) testcmp); // HOW IT WORKS?
     mu_assert(rc == 0, "sort failed");
     mu_assert(is_sorted(words), "didn't sort it");
 

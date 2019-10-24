@@ -3,8 +3,6 @@
 
 int DArray_qsort(DArray *array, DArray_compare cmp)
 {
-    // return qsort(array->contents, DArray_count(array), sizeof(void *), cmp);
-    
     qsort(array->contents, DArray_count(array), sizeof(void *), cmp);
     return 0;
 }
