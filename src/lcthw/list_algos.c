@@ -1,14 +1,14 @@
 #include <lcthw/list_algos.h>
 #include <lcthw/dbg.h>
 
-inline void ListNode_swap(ListNode * a, ListNode * b)
+inline void ListNode_swap(ListNode *a, ListNode *b)
 {
     void *temp = a->value;
     a->value = b->value;
     b->value = temp;
 }
 
-int List_bubble_sort(List * list, List_compare cmp)
+int List_bubble_sort(List *list, List_compare cmp)
 {
     int sorted = 1;
 
@@ -31,7 +31,7 @@ int List_bubble_sort(List * list, List_compare cmp)
     return 0;
 }
 
-inline List *List_merge(List * left, List * right, List_compare cmp)
+inline List *List_merge(List *left, List *right, List_compare cmp)
 {
     List *result = List_create();
     void *val = NULL;
@@ -57,7 +57,7 @@ inline List *List_merge(List * left, List * right, List_compare cmp)
     return result;
 }
 
-List *List_merge_sort(List * list, List_compare cmp)
+List *List_merge_sort(List *list, List_compare cmp)
 {
     List *result = NULL;
 
