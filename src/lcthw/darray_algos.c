@@ -12,16 +12,19 @@ int DArray_heapsort(DArray *array, DArray_compare cmp)
     heapsort(array->contents, DArray_count(array), sizeof(void *), cmp);
     return 0;
 }
+*/
 
-
-DArray *DArray_merge(DArray *left, DArray *right, DArray_compare cmp)
+void *merge(void *left, size_t nmemb_left, void *right, size_t nmemb_right,
+		size_t size, int (*compar)(const void *, const void *))
 {
-    DArray *result = DArray_create(right->element_size, right->max << 1);
+    DArray *result = malloc(size * (nmemb_left + nmemb_right));
     void *val = NULL;
 
-    while (DArray_count(left) > 0 || DArray_count(right) > 0) {
-        if (DArray_count(left) > 0 && DArray_count(right) > 0) {
-            if (cmp(DArray_first(left), DArray_first(right)) <= 0) {
+    while (nmemb_left > 0 || nmemb_right > 0) {
+        if (nmemb_left > 0 && nmemb_right > 0) {
+            if (compar(left[0], right[0]) <= 0) {
+            	val = left[0]
+            	free(left[0])
                 val = DArray_remove(left, 0);
             } else {
                 val = DArray_remove(right, 0);
@@ -40,49 +43,50 @@ DArray *DArray_merge(DArray *left, DArray *right, DArray_compare cmp)
     return result;
 }
 
-DArray *DArray_msort(DArray *array, DArray_compare cmp)
+void *merge_sort(void *base, size_t nmemb, size_t size,
+		int (*compar)(const void *, const void *))
 {
-    DArray *result = NULL;
+    void *result = NULL;
 
-    if (DArray_count(array) <= 1) {
-        return array;
+    if (nmemb <= 1) {
+        return NULL;
     }
+	
+	size_t left_nmemb = nmemb >> 1;
+	size_t right_nmemb = (nmemb + 1) >> 1;
+	void *left = malloc(size * left_nmemb);
+	void *right = malloc(size * right_nmemb);
 
-    DArray *left = DArray_create(array->element_size, array->max >> 1);
-    DArray *right = DArray_create(array->element_size, (array->max + 1) >> 1);
-    int middle = DArray_count(array) >> 1;
+    int middle = (int)nmemb >> 1;
     
     int i = 0;
-    
-    for(i = 0; i < DArray_count(array); i++) {
+    for(i = 0; i < nmemb; i++) {
     	if (middle > 0) {
-    		DArray_push(left, DArray_get(array, i));
+    		left[i] = base[i];
     	} else {
-    		DArray_push(right, DArray_get(array, i));
+    		right[i-middle] = base[i];
     	}
     	
     	middle--;
     }
 
-    DArray *sort_left = DArray_msort(left, cmp);
-    DArray *sort_right = DArray_msort(right, cmp);
+    void *sort_left = merge_sort(left, left_nmemb, size, compar);
+    void *sort_right = merge_sort(right, right_nmemb, size, compar);
 
-    if (sort_left != left)
-        DArray_destroy(left);
-    if (sort_right != right)
-        DArray_destroy(right);
+    if (sort_left != left) free(left);
+    if (sort_right != right) free(right);
 
-    result = DArray_merge(sort_left, sort_right, cmp);
+    result = merge(sort_left, sort_right, cmp);
 
-    DArray_destroy(sort_left);
-    DArray_destroy(sort_right);
+    free(sort_left);
+    free(sort_right);
 
     return result;
 }
 
 int DArray_mergesort(DArray *array, DArray_compare cmp)
 {
-    DArray_msort(array, cmp);
+    merge_sort(array->contents, DArray_count(array), sizeof(void *), cmp)
     return 0;
 }
-*/
+
