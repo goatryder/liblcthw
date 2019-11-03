@@ -47,7 +47,7 @@ static int test_search(RadixMap* map)
 		d = &map->contents[i];
 		found = RadixMap_find(map, d->data.key);
 		check(found != NULL, "Didn't find %u at %u.", d->data.key, i);
-		check(found->data.key == d->data.key, "Got the wrong result: %p:%u looking for %u at %u,
+		check(found->data.key == d->data.key, "Got the wrong result: %p:%u looking for %u at %u",
 				found, found->data.key, d->data.key, i);
 	}
 	

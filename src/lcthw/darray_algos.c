@@ -13,7 +13,7 @@ int DArray_heapsort(DArray *array, DArray_compare cmp)
     return 0;
 }
 */
-
+/*
 void *merge(void *left, size_t nmemb_left, void *right, size_t nmemb_right,
 		size_t size, int (*compar)(const void *, const void *))
 {
@@ -89,4 +89,4 @@ int DArray_mergesort(DArray *array, DArray_compare cmp)
     merge_sort(array->contents, DArray_count(array), sizeof(void *), cmp)
     return 0;
 }
-
+*/

@@ -87,7 +87,7 @@ RMElement* RadixMap_find(RadixMap* map, uint32_t to_find)
 		uint32_t key = data[middle].data.key;
 		if (to_find == key) {
 			return &data[middle];
-		} else if (to find < key) {
+		} else if (to_find < key) {
 			high = middle - 1;
 		} else {
 			low = middle + 1;
